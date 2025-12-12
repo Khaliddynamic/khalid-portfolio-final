@@ -1,214 +1,1009 @@
-<section id="portfolio" class="py-20 relative">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-16 reveal">
-      <h2 class="text-3xl font-bold text-white mb-4">Portfolio</h2>
-      <p class="text-gray-400">Autoplay previews. Click a video to toggle sound.</p>
-    </div>
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Khalid | Premium Video Editor</title>
+  <meta name="description" content="Premium Video Editor from Morocco specialized in Short Form and Long Form content." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: { brand: { black: '#000000', red: '#DC2626', darkRed: '#991b1b' } }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { box-sizing: border-box; }
+    body { background-color: #000000; color: #FFFFFF; overflow-x: hidden; perspective: 1200px; }
 
-    <!-- SHORT FORM -->
-    <div class="mb-20">
-      <div class="flex items-center mb-8">
-        <div class="h-8 w-1 bg-gradient-to-b from-brand-red to-transparent mr-4 animate-pulse"></div>
-        <h3 class="text-xl font-bold text-white">
-          Short Form
-          <span class="text-gray-500 text-sm font-normal ml-2">9:16</span>
-        </h3>
+    .bg-3d-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; background: #000; overflow: hidden; }
+    .bg-3d-orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.6; animation: float3d 15s infinite ease-in-out; }
+    .orb-1 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(220, 38, 38, 0.4) 0%, rgba(220, 38, 38, 0.1) 100%); top: -100px; left: -100px; animation: float3d 20s infinite ease-in-out; }
+    .orb-2 { width: 300px; height: 300px; background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(59, 130, 246, 0.05) 100%); bottom: -50px; right: -50px; animation: float3d 25s infinite ease-in-out reverse; }
+    .orb-3 { width: 250px; height: 250px; background: radial-gradient(circle, rgba(34, 197, 94, 0.2) 0%, rgba(34, 197, 94, 0.02) 100%); top: 50%; left: 50%; transform: translate(-50%, -50%); animation: float3d 30s infinite ease-in-out; }
+    @keyframes float3d {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(30px, -30px) scale(1.1); }
+      50% { transform: translate(-20px, 20px) scale(0.95); }
+      75% { transform: translate(10px, -10px) scale(1.05); }
+    }
+
+    .grid-bg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-image:
+        linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, 0.02) 25%, rgba(255, 255, 255, 0.02) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, 0.02) 75%, rgba(255, 255, 255, 0.02) 76%, transparent 77%, transparent),
+        linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, 0.02) 25%, rgba(255, 255, 255, 0.02) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, 0.02) 75%, rgba(255, 255, 255, 0.02) 76%, transparent 77%, transparent);
+      background-size: 50px 50px;
+      animation: gridShift 20s linear infinite;
+    }
+    @keyframes gridShift {
+      0% { background-position: 0 0; }
+      100% { background-position: 50px 50px; }
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+    .glass-strong {
+      background: rgba(20, 20, 20, 0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .card-3d { perspective: 1000px; transform-style: preserve-3d; cursor: pointer; transition: transform 0.6s ease-out; }
+    .card-3d:hover { transform: rotateX(5deg) rotateY(-5deg) scale(1.02); }
+    .card-3d-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.6s ease-out; }
+    .card-3d:hover .card-3d-inner { transform: translateZ(30px); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px) rotateX(10deg);
+      transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+      transform-style: preserve-3d;
+    }
+    .reveal.active { opacity: 1; transform: translateY(0) rotateX(0deg); }
+
+    .portfolio-item { transform-style: preserve-3d; perspective: 1000px; }
+    .portfolio-item:hover { transform: translateZ(50px) rotateY(-8deg); }
+
+    .modal-backdrop { transition: opacity 0.3s ease; backdrop-filter: blur(5px); }
+    .modal-content { transform-style: preserve-3d; transition: all 0.3s ease; }
+
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.5); }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #dc2626 0%, #991b1b 100%);
+      border-radius: 5px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, #ff3333 0%, #dc2626 100%);
+    }
+
+    .hover-glow { position: relative; transition: all 0.3s ease; }
+    .hover-glow:hover {
+      box-shadow: 0 0 30px rgba(220, 38, 38, 0.5),
+                  inset 0 0 30px rgba(220, 38, 38, 0.1);
+    }
+
+    .shine { position: relative; overflow: hidden; }
+    .shine::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+      z-index: 10;
+    }
+    .shine:hover::before { left: 100%; }
+
+    .reveal.delay-100 { animation-delay: 0.1s; }
+    .reveal.delay-200 { animation-delay: 0.2s; }
+    .reveal.delay-300 { animation-delay: 0.3s; }
+
+    #mobile-menu {
+      position: fixed;
+      top: 80px;
+      left: 0;
+      right: 0;
+      width: 100vw;
+      max-width: 100%;
+      background: rgba(20, 20, 20, 0.95) !important;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: none !important;
+      z-index: 40;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+    #mobile-menu.hidden { display: none; }
+    #mobile-menu > div {
+      padding: 1rem 0 !important;
+      max-width: 100% !important;
+      overflow-x: hidden !important;
+    }
+    #mobile-menu a, #mobile-menu button {
+      display: block;
+      width: 100% !important;
+      padding: 1rem !important;
+      text-align: center !important;
+      border: none !important;
+      background: none !important;
+      color: inherit !important;
+    }
+    #mobile-menu button {
+      background: #DC2626 !important;
+      color: white !important;
+      margin: 1rem auto !important;
+      width: calc(100% - 2rem) !important;
+      border-radius: 0.5rem !important;
+      padding: 1rem !important;
+    }
+
+    /* Hero animation */
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .hero-line {
+      opacity: 0;
+      animation: fadeUp 0.6s ease-out forwards;
+    }
+    .hero-line.delay-1 { animation-delay: 0.1s; }
+    .hero-line.delay-2 { animation-delay: 0.2s; }
+    .hero-line.delay-3 { animation-delay: 0.3s; }
+
+    .hero-btn {
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.22s ease, border-color 0.22s ease;
+    }
+    .hero-btn:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 14px 35px rgba(0,0,0,0.45);
+    }
+
+    /* Sticky navbar shrink */
+    #navbar.scrolled {
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: rgba(12, 12, 12, 0.9);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      height: 64px;
+    }
+    #navbar.scrolled .logo-text {
+      font-size: 1.1rem;
+    }
+
+    /* Services hover */
+    .service-card {
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.6);
+      border-color: rgba(220, 38, 38, 0.4);
+    }
+
+    /* Why me icons */
+    .why-card { transition: transform 0.25s ease; }
+    .why-icon {
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .why-card:hover {
+      transform: scale(1.03);
+    }
+    .why-card:hover .why-icon {
+      transform: scale(1.05) translateY(-2px);
+      box-shadow: 0 10px 25px rgba(220,38,38,0.45);
+    }
+
+    /* Form input focus + shake */
+    .input-field {
+      transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .input-field:focus {
+      box-shadow: 0 0 0 1px rgba(220,38,38,0.6), 0 0 18px rgba(220,38,38,0.35);
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-4px); }
+      40% { transform: translateX(4px); }
+      60% { transform: translateX(-3px); }
+      80% { transform: translateX(3px); }
+    }
+    .shake {
+      animation: shake 0.25s ease-in-out;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-brand-red selection:text-white relative">
+  <div class="bg-3d-container">
+    <div class="grid-bg"></div>
+    <div class="bg-3d-orb orb-1"></div>
+    <div class="bg-3d-orb orb-2"></div>
+    <div class="bg-3d-orb orb-3"></div>
+  </div>
+
+  <div class="relative z-10">
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 w-full z-50 glass-strong transition-all duration-300" id="navbar">
+      <div class="w-full px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-20">
+          <div class="flex-shrink-0 cursor-pointer" onclick="window.scrollTo(0,0)">
+            <span class="logo-text text-2xl font-bold tracking-widest text-white hover:text-brand-red transition-colors duration-300">KHALID</span>
+          </div>
+          <div class="hidden md:block">
+            <div class="ml-10 flex items-baseline space-x-8">
+              <a href="#home" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+              <a href="#services" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Services</a>
+              <a href="#portfolio" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Portfolio</a>
+              <a href="#whyme" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Why Me</a>
+              <button class="bg-brand-red hover:bg-red-700 text-white px-5 py-2 rounded-full text-sm font-medium transition-all transform hover:scale-110 hover:shadow-lg hover:shadow-red-900/50 shadow-lg shadow-red-900/20 shine" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Let's Talk</button>
+            </div>
+          </div>
+          <div class="md:hidden flex">
+            <button type="button" id="mobile-menu-btn" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-white/10 focus:outline-none">
+              <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
-
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-        <!-- Gym Reel -->
-        <div class="glass rounded-xl overflow-hidden portfolio-card reveal card-3d hover-glow shine flex flex-col">
-          <div class="relative aspect-[9/16] w-full overflow-hidden">
-            <video
-              class="portfolio-video w-full h-full object-cover"
-              src="videos/gym-reel.mp4"
-              autoplay
-              muted
-              loop
-              playsinline
-            ></video>
-            <button
-              class="sound-toggle absolute top-2 right-2 w-8 h-8 rounded-full bg-black/70 flex items-center justify-center text-white text-xs"
-              type="button"
-            >
-              🔇
-            </button>
-          </div>
-          <div class="p-4 flex-1 flex flex-col justify-between">
-            <div class="flex items-center justify-between mb-1">
-              <h4 class="text-white font-semibold text-sm">Gym Motivation Reel</h4>
-              <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 text-[11px] text-gray-300">
-                <span class="w-4 h-4 rounded bg-gradient-to-tr from-purple-500 via-pink-500 to-yellow-500"></span>
-                Instagram
-              </span>
-            </div>
-            <p class="text-[11px] text-gray-400 mb-2">Short-form, hook-first, high-energy pacing.</p>
-          </div>
+      <div class="md:hidden hidden" id="mobile-menu">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-white/5">Home</a>
+          <a href="#services" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5">Services</a>
+          <a href="#portfolio" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5">Portfolio</a>
+          <a href="#whyme" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5">Why Me</a>
+          <button onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" class="block w-full py-3 text-base font-bold bg-brand-red text-white rounded-md mt-4">Let's Talk</button>
         </div>
+      </div>
+    </nav>
 
-        <!-- Product Ad -->
-        <div class="glass rounded-xl overflow-hidden portfolio-card reveal card-3d hover-glow shine flex flex-col delay-100">
-          <div class="relative aspect-[9/16] w-full overflow-hidden">
-            <video
-              class="portfolio-video w-full h-full object-cover"
-              src="videos/product-ad.mp4"
-              autoplay
-              muted
-              loop
-              playsinline
-            ></video>
-            <button
-              class="sound-toggle absolute top-2 right-2 w-8 h-8 rounded-full bg-black/70 flex items-center justify-center text-white text-xs"
-              type="button"
-            >
-              🔇
-            </button>
+    <!-- HERO -->
+    <section id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden min-h-[80vh] flex items-center">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+        <div class="reveal active">
+          <div class="inline-block mb-6 px-4 py-1.5 rounded-full glass border border-brand-red/30 card-3d hover-glow shine">
+            <span class="text-xs text-gray-400 mr-2">Premium Video Editor</span>
+            <span class="text-brand-red text-xs font-semibold tracking-wider uppercase">Video Editor • Morocco</span>
           </div>
-          <div class="p-4 flex-1 flex flex-col justify-between">
-            <div class="flex items-center justify-between mb-1">
-              <h4 class="text-white font-semibold text-sm">E‑commerce Product Ad</h4>
-              <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 text-[11px] text-gray-300">
-                <span class="w-4 h-4 rounded bg-gradient-to-tr from-purple-500 via-pink-500 to-yellow-500"></span>
-                Instagram
-              </span>
-            </div>
-            <p class="text-[11px] text-gray-400 mb-2">Conversion‑focused edit for paid social.</p>
-          </div>
-        </div>
 
-        <!-- Travel teaser -->
-        <div class="glass rounded-xl overflow-hidden portfolio-card reveal card-3d hover-glow shine flex flex-col delay-200">
-          <div class="relative aspect-[9/16] w-full overflow-hidden">
-            <video
-              class="portfolio-video w-full h-full object-cover"
-              src="videos/travel-teaser.mp4"
-              autoplay
-              muted
-              loop
-              playsinline
-            ></video>
-            <button
-              class="sound-toggle absolute top-2 right-2 w-8 h-8 rounded-full bg-black/70 flex items-center justify-center text-white text-xs"
-              type="button"
-            >
-              🔇
-            </button>
-          </div>
-          <div class="p-4 flex-1 flex flex-col justify-between">
-            <div class="flex items-center justify-between mb-1">
-              <h4 class="text-white font-semibold text-sm">Travel Teaser</h4>
-              <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 text-[11px] text-gray-300">
-                <span class="w-4 h-4 rounded bg-gradient-to-tr from-purple-500 via-pink-500 to-yellow-500"></span>
-                Instagram
-              </span>
-            </div>
-            <p class="text-[11px] text-gray-400 mb-2">Cinematic b‑roll and smooth transitions.</p>
-          </div>
-        </div>
+          <h1 class="hero-line text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-tight mb-6">
+            Ready to scale your business with <span class="text-brand-red">content that sells?</span>
+          </h1>
+          <p class="hero-line delay-1 mt-6 text-xl text-gray-400 max-w-2xl mx-auto mb-2">
+            I help you generate sales through premium, optimized content.
+          </p>
+          <p class="hero-line delay-2 text-sm text-gray-500 mb-10 font-medium">
+            I do short form for Instagram and TikTok, and long form for YouTube.
+          </p>
 
-        <!-- Podcast clip -->
-        <div class="glass rounded-xl overflow-hidden portfolio-card reveal card-3d hover-glow shine flex flex-col delay-300">
-          <div class="relative aspect-[9/16] w-full overflow-hidden">
-            <video
-              class="portfolio-video w-full h-full object-cover"
-              src="videos/podcast-clip.mp4"
-              autoplay
-              muted
-              loop
-              playsinline
-            ></video>
+          <div class="hero-line delay-3 flex flex-col sm:flex-row gap-4 justify-center">
             <button
-              class="sound-toggle absolute top-2 right-2 w-8 h-8 rounded-full bg-black/70 flex items-center justify-center text-white text-xs"
-              type="button"
+              onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})"
+              class="hero-btn px-8 py-4 border border-transparent text-base font-medium rounded-lg text-white bg-brand-red hover:bg-red-700 md:text-lg transition-all shadow-lg shadow-red-900/30 hover:shadow-red-900/50 hover-glow shine"
             >
-              🔇
+              Get a Quote
             </button>
+            <a
+              href="#portfolio"
+              class="hero-btn px-8 py-4 border border-gray-600 text-base font-medium rounded-lg text-gray-300 bg-transparent hover:bg-white/5 hover:border-white md:text-lg transition-all hover-glow shine"
+            >
+              View Portfolio
+            </a>
           </div>
-          <div class="p-4 flex-1 flex flex-col justify-between">
-            <div class="flex items-center justify-between mb-1">
-              <h4 class="text-white font-semibold text-sm">Podcast Clip</h4>
-              <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 text-[11px] text-gray-300">
-                <span class="w-4 h-4 rounded bg-gradient-to-tr from-purple-500 via-pink-500 to-yellow-500"></span>
-                Instagram / TikTok
-              </span>
-            </div>
-            <p class="text-[11px] text-gray-400 mb-2">Punchy captions and zooms for retention.</p>
+
+          <!-- Social proof -->
+          <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-2 text-xs text-gray-500">
+            <span class="px-3 py-1 rounded-full bg-white/5 border border-white/5">
+              200+ videos edited for personal brands and businesses
+            </span>
+            <span class="px-3 py-1 rounded-full bg-white/5 border border-white/5">
+              Specialized in Reels, TikTok & YouTube content
+            </span>
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- LONG FORM -->
-    <div>
-      <div class="flex items-center mb-8">
-        <div class="h-8 w-1 bg-gradient-to-b from-blue-500 to-transparent mr-4 animate-pulse"></div>
-        <h3 class="text-xl font-bold text-white">
-          Long Form
-          <span class="text-gray-500 text-sm font-normal ml-2">16:9</span>
-        </h3>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Documentary -->
-        <div class="glass rounded-xl overflow-hidden portfolio-card reveal card-3d hover-glow shine flex flex-col">
-          <div class="relative aspect-video w-full overflow-hidden">
-            <video
-              class="portfolio-video w-full h-full object-cover"
-              src="videos/founder-doc.mp4"
-              autoplay
-              muted
-              loop
-              playsinline
-            ></video>
-            <button
-              class="sound-toggle absolute top-2 right-2 w-8 h-8 rounded-full bg-black/70 flex items-center justify-center text-white text-xs"
-              type="button"
-            >
-              🔇
-            </button>
-          </div>
-          <div class="p-4 flex-1 flex flex-col justify-between">
-            <div class="flex items-center justify-between mb-1">
-              <h4 class="text-white font-semibold text-sm">Founder Documentary</h4>
-              <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 text-[11px] text-gray-300">
-                <span class="w-4 h-4 bg-red-600 rounded"></span>
-                YouTube
-              </span>
+    <!-- SERVICES -->
+    <section id="services" class="py-20 relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16 reveal">
+          <h2 class="text-3xl font-bold text-white mb-4">Services</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">High-converting edits tailored to your specific platform needs.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="glass service-card border border-white/5 p-8 rounded-xl transition-all duration-300 group reveal card-3d hover-glow shine">
+            <div class="card-3d-inner">
+              <div class="w-12 h-12 bg-brand-red/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-brand-red/20 transition-colors transform group-hover:scale-110">
+                <svg class="w-6 h-6 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold text-white mb-2">Short Form Content</h3>
+              <p class="text-sm text-brand-red mb-4 font-medium">Reels / TikTok / YouTube Shorts</p>
+              <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                Viral-style editing designed to stop the scroll. Fast-paced cuts, engaging captions, sound design, and retention-focused structures.
+              </p>
+              <ul class="text-gray-500 text-sm space-y-2">
+                <li class="flex items-center"><span class="w-1.5 h-1.5 bg-brand-red rounded-full mr-2"></span>Vertical (9:16) Optimized</li>
+                <li class="flex items-center"><span class="w-1.5 h-1.5 bg-brand-red rounded-full mr-2"></span>Dynamic Captions</li>
+                <li class="flex items-center"><span class="w-1.5 h-1.5 bg-brand-red rounded-full mr-2"></span>Trending Audio Integration</li>
+              </ul>
             </div>
-            <p class="text-[11px] text-gray-400 mb-2">Narrative‑driven story with b‑roll & sound design.</p>
+          </div>
+
+          <div class="glass service-card border border-white/5 p-8 rounded-xl transition-all duration-300 group reveal card-3d hover-glow shine delay-100">
+            <div class="card-3d-inner">
+              <div class="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-blue-500/20 transition-colors transform group-hover:scale-110">
+                <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold text-white mb-2">Long Form Content</h3>
+              <p class="text-sm text-blue-400 mb-4 font-medium">YouTube / Podcasts / Documentaries</p>
+              <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                Storytelling-driven editing that keeps viewers watching. Advanced pacing, B-roll selection, color grading, and professional audio mixing.
+              </p>
+              <ul class="text-gray-500 text-sm space-y-2">
+                <li class="flex items-center"><span class="w-1.5 h-1.5 bg-blue-400 rounded-full mr-2"></span>Horizontal (16:9) Optimized</li>
+                <li class="flex items-center"><span class="w-1.5 h-1.5 bg-blue-400 rounded-full mr-2"></span>Narrative Pacing</li>
+                <li class="flex items-center"><span class="w-1.5 h-1.5 bg-blue-400 rounded-full mr-2"></span>Professional Color & Audio</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section id="portfolio" class="py-20 relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16 reveal">
+          <h2 class="text-3xl font-bold text-white mb-4">Portfolio</h2>
+          <p class="text-gray-400">Click any card to watch the video.</p>
+        </div>
+
+        <!-- SHORT FORM -->
+        <div class="mb-20">
+          <div class="flex items-center mb-8">
+            <div class="h-8 w-1 bg-gradient-to-b from-brand-red to-transparent mr-4 animate-pulse"></div>
+            <h3 class="text-xl font-bold text-white">
+              Short Form
+              <span class="text-gray-500 text-sm font-normal ml-2">9:16</span>
+            </h3>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            <!-- Card 1 -->
+            <div
+              class="group glass rounded-xl overflow-hidden portfolio-item reveal card-3d hover-glow shine flex flex-col"
+              data-title="Gym Motivation Reel"
+              data-video-url="https://www.youtube.com/watch?v=dVIFuB7axak"
+            >
+              <div class="relative aspect-[9/16] w-full overflow-hidden">
+                <img
+                  src="https://img.youtube.com/vi/dVIFuB7axak/maxresdefault.jpg"
+                  alt="Gym Motivation"
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100"
+                />
+                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-all duration-300"></div>
+                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div class="px-3 py-1 rounded-full bg-black/70 text-xs text-white tracking-wide">
+                    Watch reel
+                  </div>
+                </div>
+              </div>
+              <div class="p-4 flex-1 flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-3">
+                  <h4 class="text-white font-semibold text-sm">Gym Motivation</h4>
+                  <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 text-[11px] text-gray-300">
+                    <span class="w-4 h-4 rounded bg-gradient-to-tr from-purple-500 via-pink-500 to-yellow-500"></span>
+                    IG Reel
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  class="watch-btn mt-auto inline-flex items-center justify-center gap-2 text-xs font-medium px-3 py-2 rounded-lg bg-brand-red hover:bg-red-700 text-white transition-all duration-200 hover:shadow-lg hover:shadow-red-900/40"
+                >
+                  Watch
+                  <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div
+              class="group glass rounded-xl overflow-hidden portfolio-item reveal card-3d hover-glow shine flex flex-col delay-100"
+              data-title="E-Commerce Product Ad"
+              data-video-url="https://www.youtube.com/watch?v=dVIFuB7axak"
+            >
+              <div class="relative aspect-[9/16] w-full overflow-hidden">
+                <img
+                  src="https://img.youtube.com/vi/dVIFuB7axak/maxresdefault.jpg"
+                  alt="Product Ad"
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100"
+                />
+                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-all duration-300"></div>
+                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div class="px-3 py-1 rounded-full bg-black/70 text-xs text-white tracking-wide">
+                    Watch reel
+                  </div>
+                </div>
+              </div>
+              <div class="p-4 flex-1 flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-3">
+                  <h4 class="text-white font-semibold text-sm">Product Ad</h4>
+                  <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 text-[11px] text-gray-300">
+                    <span class="w-4 h-4 rounded bg-gradient-to-tr from-purple-500 via-pink-500 to-yellow-500"></span>
+                    IG Reel
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  class="watch-btn mt-auto inline-flex items-center justify-center gap-2 text-xs font-medium px-3 py-2 rounded-lg bg-brand-red hover:bg-red-700 text-white transition-all duration-200 hover:shadow-lg hover:shadow-red-900/40"
+                >
+                  Watch
+                  <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div
+              class="group glass rounded-xl overflow-hidden portfolio-item reveal card-3d hover-glow shine flex flex-col delay-200"
+              data-title="Travel Vlog Teaser"
+              data-video-url="https://www.youtube.com/watch?v=dVIFuB7axak"
+            >
+              <div class="relative aspect-[9/16] w-full overflow-hidden">
+                <img
+                  src="https://img.youtube.com/vi/dVIFuB7axak/maxresdefault.jpg"
+                  alt="Travel Teaser"
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100"
+                />
+                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-all duration-300"></div>
+                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div class="px-3 py-1 rounded-full bg-black/70 text-xs text-white tracking-wide">
+                    Watch reel
+                  </div>
+                </div>
+              </div>
+              <div class="p-4 flex-1 flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-3">
+                  <h4 class="text-white font-semibold text-sm">Travel Teaser</h4>
+                  <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 text-[11px] text-gray-300">
+                    <span class="w-4 h-4 rounded bg-gradient-to-tr from-purple-500 via-pink-500 to-yellow-500"></span>
+                    IG Reel
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  class="watch-btn mt-auto inline-flex items-center justify-center gap-2 text-xs font-medium px-3 py-2 rounded-lg bg-brand-red hover:bg-red-700 text-white transition-all duration-200 hover:shadow-lg hover:shadow-red-900/40"
+                >
+                  Watch
+                  <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div
+              class="group glass rounded-xl overflow-hidden portfolio-item reveal card-3d hover-glow shine flex flex-col delay-300"
+              data-title="Podcast Clip"
+              data-video-url="https://www.youtube.com/watch?v=dVIFuB7axak"
+            >
+              <div class="relative aspect-[9/16] w-full overflow-hidden">
+                <img
+                  src="https://img.youtube.com/vi/dVIFuB7axak/maxresdefault.jpg"
+                  alt="Podcast Clip"
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100"
+                />
+                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-all duration-300"></div>
+                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div class="px-3 py-1 rounded-full bg-black/70 text-xs text-white tracking-wide">
+                    Watch reel
+                  </div>
+                </div>
+              </div>
+              <div class="p-4 flex-1 flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-3">
+                  <h4 class="text-white font-semibold text-sm">Podcast Clip</h4>
+                  <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 text-[11px] text-gray-300">
+                    <span class="w-4 h-4 rounded bg-gradient-to-tr from-purple-500 via-pink-500 to-yellow-500"></span>
+                    IG Reel
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  class="watch-btn mt-auto inline-flex items-center justify-center gap-2 text-xs font-medium px-3 py-2 rounded-lg bg-brand-red hover:bg-red-700 text-white transition-all duration-200 hover:shadow-lg hover:shadow-red-900/40"
+                >
+                  Watch
+                  <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Tech review -->
-        <div class="glass rounded-xl overflow-hidden portfolio-card reveal card-3d hover-glow shine flex flex-col delay-100">
-          <div class="relative aspect-video w-full overflow-hidden">
-            <video
-              class="portfolio-video w-full h-full object-cover"
-              src="videos/tech-review.mp4"
-              autoplay
-              muted
-              loop
-              playsinline
-            ></video>
-            <button
-              class="sound-toggle absolute top-2 right-2 w-8 h-8 rounded-full bg-black/70 flex items-center justify-center text-white text-xs"
-              type="button"
+        <!-- LONG FORM -->
+        <div>
+          <div class="flex items-center mb-8">
+            <div class="h-8 w-1 bg-gradient-to-b from-blue-500 to-transparent mr-4 animate-pulse"></div>
+            <h3 class="text-xl font-bold text-white">
+              Long Form
+              <span class="text-gray-500 text-sm font-normal ml-2">16:9</span>
+            </h3>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Long form card 1 -->
+            <div
+              class="group glass rounded-xl overflow-hidden portfolio-item reveal card-3d hover-glow shine flex flex-col"
+              data-title="Founder Documentary"
+              data-video-url="https://www.youtube.com/watch?v=dVIFuB7axak"
             >
-              🔇
+              <div class="relative aspect-video w-full overflow-hidden">
+                <img
+                  src="https://img.youtube.com/vi/dVIFuB7axak/maxresdefault.jpg"
+                  alt="Founder Documentary"
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100"
+                />
+                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-all duration-300"></div>
+                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div class="px-3 py-1 rounded-full bg-black/70 text-xs text-white tracking-wide">
+                    Watch video
+                  </div>
+                </div>
+              </div>
+              <div class="p-4 flex-1 flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-3">
+                  <h4 class="text-white font-semibold text-sm">Founder Documentary</h4>
+                  <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 text-[11px] text-gray-300">
+                    <span class="w-4 h-4 bg-red-600 rounded"></span>
+                    YouTube
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  class="watch-btn mt-auto inline-flex items-center justify-center gap-2 text-xs font-medium px-3 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition-all duration-200 hover:shadow-lg hover:shadow-blue-900/40"
+                >
+                  Watch
+                  <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Long form card 2 -->
+            <div
+              class="group glass rounded-xl overflow-hidden portfolio-item reveal card-3d hover-glow shine flex flex-col delay-100"
+              data-title="Tech Review & Unboxing"
+              data-video-url="https://www.youtube.com/watch?v=dVIFuB7axak"
+            >
+              <div class="relative aspect-video w-full overflow-hidden">
+                <img
+                  src="https://img.youtube.com/vi/dVIFuB7axak/maxresdefault.jpg"
+                  alt="Tech Review"
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100"
+                />
+                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-all duration-300"></div>
+                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div class="px-3 py-1 rounded-full bg-black/70 text-xs text-white tracking-wide">
+                    Watch video
+                  </div>
+                </div>
+              </div>
+              <div class="p-4 flex-1 flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-3">
+                  <h4 class="text-white font-semibold text-sm">Tech Review</h4>
+                  <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 text-[11px] text-gray-300">
+                    <span class="w-4 h-4 bg-red-600 rounded"></span>
+                    YouTube
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  class="watch-btn mt-auto inline-flex items-center justify-center gap-2 text-xs font-medium px-3 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition-all duration-200 hover:shadow-lg hover:shadow-blue-900/40"
+                >
+                  Watch
+                  <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY ME -->
+    <section id="whyme" class="py-20 relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16 reveal">
+          <h2 class="text-3xl font-bold text-white">Why work with me?</h2>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Languages -->
+          <div class="glass why-card p-6 rounded-xl reveal card-3d hover-glow shine">
+            <div class="why-icon w-10 h-10 rounded-full bg-brand-red/15 flex items-center justify-center mb-3">
+              <svg class="w-5 h-5 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M3 12h18M12 3a15.3 15.3 0 010 18M12 3a15.3 15.3 0 000 18"></path>
+              </svg>
+            </div>
+            <h3 class="text-sm font-semibold text-white mb-1">Bilingual</h3>
+            <p class="text-xs text-gray-400">English & French for wider reach.</p>
+          </div>
+
+          <!-- Speed -->
+          <div class="glass why-card p-6 rounded-xl reveal card-3d hover-glow shine delay-100">
+            <div class="why-icon w-10 h-10 rounded-full bg-brand-red/15 flex items-center justify-center mb-3">
+              <svg class="w-5 h-5 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M13 2L3 14h7l-1 8 10-12h-7z"></path>
+              </svg>
+            </div>
+            <h3 class="text-sm font-semibold text-white mb-1">Fast Delivery</h3>
+            <p class="text-xs text-gray-400">24–48h turnaround for short form.</p>
+          </div>
+
+          <!-- Quality -->
+          <div class="glass why-card p-6 rounded-xl reveal card-3d hover-glow shine delay-200">
+            <div class="why-icon w-10 h-10 rounded-full bg-brand-red/15 flex items-center justify-center mb-3">
+              <svg class="w-5 h-5 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M12 3l2.9 6.3 6.6.6-4.9 4.3 1.5 6.5L12 17.8 5.9 20.7l1.5-6.5-4.9-4.3 6.6-.6z"></path>
+              </svg>
+            </div>
+            <h3 class="text-sm font-semibold text-white mb-1">Premium Look</h3>
+            <p class="text-xs text-gray-400">Cinematic color, audio & pacing.</p>
+          </div>
+
+          <!-- Assurance -->
+          <div class="glass why-card p-6 rounded-xl reveal card-3d hover-glow shine delay-300">
+            <div class="why-icon w-10 h-10 rounded-full bg-brand-red/15 flex items-center justify-center mb-3">
+              <svg class="w-5 h-5 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M12 3l7 4v6c0 4-2.7 7.4-7 8-4.3-.6-7-4-7-8V7z"></path>
+              </svg>
+            </div>
+            <h3 class="text-sm font-semibold text-white mb-1">Revision Friendly</h3>
+            <p class="text-xs text-gray-400">We refine until it feels right.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-20 relative overflow-hidden">
+      <div class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-brand-red/5 to-transparent pointer-events-none"></div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          <div class="reveal">
+            <h2 class="text-4xl font-extrabold text-white mb-6">
+              Let's build your <br />
+              <span class="text-brand-red">next video.</span>
+            </h2>
+            <p class="text-gray-400 mb-8 text-lg">
+              Ready to level up? Fill out the form and you'll get a reply within 24 hours.
+            </p>
+
+            <div class="space-y-6">
+              <a href="mailto:khalid1editor@gmail.com" class="flex items-center group hover-glow p-4 rounded-lg transition-all">
+                <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-brand-red transition-colors group-hover:scale-110 transform">
+                  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                  </svg>
+                </div>
+                <span class="ml-4 text-gray-300 group-hover:text-white transition-colors">khalid1editor@gmail.com</span>
+              </a>
+
+              <a href="https://instagram.com/khalid4edit" target="_blank" class="flex items-center group hover-glow p-4 rounded-lg transition-all">
+                <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-brand-red transition-colors group-hover:scale-110 transform">
+                  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01"/>
+                  </svg>
+                </div>
+                <span class="ml-4 text-gray-300 group-hover:text-white transition-colors">@khalid4edit</span>
+              </a>
+
+              <div class="flex items-center group hover-glow p-4 rounded-lg transition-all">
+                <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-brand-red transition-colors group-hover:scale-110 transform">
+                  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                  </svg>
+                </div>
+                <span class="ml-4 text-gray-300 group-hover:text-white transition-colors">+212 646-173884</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass p-8 rounded-2xl border-t border-white/10 reveal delay-200 card-3d hover-glow shine">
+            <form id="contactForm" class="space-y-5">
+              <div>
+                <label class="block text-sm font-medium text-gray-400 mb-1">Full Name</label>
+                <input type="text" name="fullName" required class="input-field w-full bg-black/40 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-red focus:ring-2 focus:ring-brand-red/50 transition-all" placeholder="John Doe">
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                  <label class="block text-sm font-medium text-gray-400 mb-1">Email</label>
+                  <input type="email" name="email" required class="input-field w-full bg-black/40 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-red focus:ring-2 focus:ring-brand-red/50 transition-all" placeholder="john@company.com">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-400 mb-1">Phone (WhatsApp)</label>
+                  <input type="tel" name="phone" required class="input-field w-full bg-black/40 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-red focus:ring-2 focus:ring-brand-red/50 transition-all" placeholder="+1 234 567 890">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                  <label class="block text-sm font-medium text-gray-400 mb-1">Instagram Handle</label>
+                  <input type="text" name="instagram" class="input-field w-full bg-black/40 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-red focus:ring-2 focus:ring-brand-red/50 transition-all" placeholder="@username">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-400 mb-1">Est. Budget ($)</label>
+                  <input type="text" name="budget" class="input-field w-full bg-black/40 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-red focus:ring-2 focus:ring-brand-red/50 transition-all" placeholder="e.g. 500 - 1000">
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-400 mb-2">Project Type</label>
+                <input type="hidden" name="projectType" id="projectTypeInput" value="Short Form">
+                <div class="flex gap-3">
+                  <button type="button" class="project-type-btn flex-1 py-2.5 border border-gray-700 rounded-lg text-sm font-medium text-gray-300 hover:border-gray-500 transition-all bg-brand-red border-brand-red text-white shine" data-value="Short Form">Short Form</button>
+                  <button type="button" class="project-type-btn flex-1 py-2.5 border border-gray-700 rounded-lg text-sm font-medium text-gray-300 hover:border-gray-500 transition-all shine" data-value="Long Form">Long Form</button>
+                  <button type="button" class="project-type-btn flex-1 py-2.5 border border-gray-700 rounded-lg text-sm font-medium text-gray-300 hover:border-gray-500 transition-all shine" data-value="Both">Both</button>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-400 mb-1">Project Description</label>
+                <textarea name="description" required rows="4" class="input-field w-full bg-black/40 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-red focus:ring-2 focus:ring-brand-red/50 transition-all" placeholder="Tell me about your channel and goals..."></textarea>
+              </div>
+
+              <button type="submit" class="w-full bg-brand-red hover:bg-red-700 text-white font-bold py-4 rounded-lg transition-all transform hover:-translate-y-1 shadow-lg shadow-red-900/30 hover:shadow-red-900/50 hover-glow shine">
+                Send Request
+              </button>
+              <p id="formStatus" class="text-center text-sm hidden"></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-white/5 bg-black/50 py-12 backdrop-blur">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-4 md:mb-0">
+          <span class="text-2xl font-bold tracking-widest text-white hover:text-brand-red transition-colors">KHALID</span>
+          <p class="text-gray-500 text-sm mt-2">© <span id="year"></span> Premium Video Editor.</p>
+        </div>
+        <div class="flex space-x-6">
+          <a href="mailto:khalid1editor@gmail.com" class="text-gray-400 hover:text-white transition-colors">Email</a>
+          <a href="https://instagram.com/khalid4edit" class="text-gray-400 hover:text-white transition-colors">Instagram</a>
+          <a href="https://wa.me/212646173884" class="text-gray-400 hover:text-white transition-colors">WhatsApp</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- MODAL -->
+    <div id="videoModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center">
+      <div class="absolute inset-0 bg-black/90 modal-backdrop backdrop-blur" id="modalBackdrop"></div>
+      <div class="relative w-full max-w-4xl mx-4 md:mx-0 modal-content scale-95 opacity-0">
+        <div class="glass-strong border border-white/10 rounded-xl overflow-hidden shadow-2xl">
+          <div class="flex justify-between items-center p-4 border-b border-white/10">
+            <h3 id="modalTitle" class="text-white font-medium text-lg">Project Title</h3>
+            <button id="closeModalBtn" class="text-gray-400 hover:text-white transition-colors p-1 hover:scale-125 transform">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
             </button>
           </div>
-          <div class="p-4 flex-1 flex flex-col justify-between">
-            <div class="flex items-center justify-between mb-1">
-              <h4 class="text-white font-semibold text-sm">Tech Review & Unboxing</h4>
-              <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 text-[11px] text-gray-300">
-                <span class="w-4 h-4 bg-red-600 rounded"></span>
-                YouTube
-              </span>
-            </div>
-            <p class="text-[11px] text-gray-400 mb-2">Clean pacing, overlays and product focus.</p>
+          <div class="relative bg-black">
+            <iframe
+              id="videoPlayer"
+              width="100%"
+              height="500"
+              src=""
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+              style="aspect-ratio: 16/9;"
+            ></iframe>
           </div>
         </div>
       </div>
     </div>
   </div>
-</section>
+
+  <!-- SCRIPTS -->
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile menu
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => { mobileMenu.classList.add('hidden'); });
+    });
+
+    // Scroll reveal
+    const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+    document.querySelectorAll('.reveal').forEach(el => { observer.observe(el); });
+
+    // Sticky navbar shrink
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 40) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Modal logic (supports YouTube, Drive, etc.)
+    const modal = document.getElementById('videoModal');
+    const modalContent = modal.querySelector('.modal-content');
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const modalTitle = document.getElementById('modalTitle');
+    const videoPlayer = document.getElementById('videoPlayer');
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+    function buildEmbedUrl(url) {
+      if (!url) return '';
+      if (url.includes('youtube.com/watch')) {
+        return url.replace('watch?v=', 'embed/') + '?autoplay=1';
+      }
+      if (url.includes('youtu.be/')) {
+        const id = url.split('youtu.be/')[1].split(/[?&]/)[0];
+        return `https://www.youtube.com/embed/${id}?autoplay=1`;
+      }
+      return url;
+    }
+
+    function openModal(title, url) {
+      modalTitle.textContent = title;
+      videoPlayer.src = buildEmbedUrl(url);
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modalContent.classList.remove('scale-95', 'opacity-0');
+        modalContent.classList.add('scale-100', 'opacity-100');
+      }, 10);
+    }
+
+    function closeModal() {
+      modalContent.classList.remove('scale-100', 'opacity-100');
+      modalContent.classList.add('scale-95', 'opacity-0');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        videoPlayer.src = '';
+      }, 300);
+    }
+
+    portfolioItems.forEach(item => {
+      const watchBtn = item.querySelector('.watch-btn');
+      if (watchBtn) {
+        watchBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const title = item.dataset.title;
+          const url = item.dataset.videoUrl;
+          openModal(title, url);
+        });
+      } else {
+        item.addEventListener('click', () => {
+          const title = item.dataset.title;
+          const url = item.dataset.videoUrl;
+          openModal(title, url);
+        });
+      }
+    });
+
+    closeModalBtn.addEventListener('click', closeModal);
+    modalBackdrop.addEventListener('click', closeModal);
+
+    // Project type buttons
+    const typeBtns = document.querySelectorAll('.project-type-btn');
+    const typeInput = document.getElementById('projectTypeInput');
+    typeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        typeBtns.forEach(b => {
+          b.classList.remove('bg-brand-red', 'border-brand-red', 'text-white');
+          b.classList.add('text-gray-300', 'border-gray-700');
+        });
+        btn.classList.remove('text-gray-300', 'border-gray-700');
+        btn.classList.add('bg-brand-red', 'border-brand-red', 'text-white');
+        typeInput.value = btn.dataset.value;
+      });
+    });
+
+    // Contact form with validation + micro shake + loading
+    const form = document.getElementById('contactForm');
+    const formStatus = document.getElementById('formStatus');
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyn6Xu0trUNONIumwQPxIAxg50E-z41gfW8BYiYDFwo75tRW-jUAQbJcoMp14yKsK_O/exec';
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      // basic required validation
+      let hasError = false;
+      ['fullName','email','phone','description'].forEach(name => {
+        const field = form[name];
+        if (!field.value.trim()) {
+          hasError = true;
+          field.classList.add('shake', 'border-red-500');
+          setTimeout(() => field.classList.remove('shake'), 250);
+        } else {
+          field.classList.remove('border-red-500');
+        }
+      });
+      if (hasError) return;
+
+      const btn = form.querySelector('button[type="submit"]');
+      const originalText = btn.innerText;
+      btn.disabled = true;
+      btn.innerText = "Sending...";
+      btn.classList.add('opacity-80');
+      formStatus.classList.add('hidden');
+
+      const formData = new URLSearchParams();
+      formData.append('fullName', form.fullName.value);
+      formData.append('email', form.email.value);
+      formData.append('phone', form.phone.value);
+      formData.append('instagram', form.instagram.value);
+      formData.append('budget', form.budget.value);
+      formData.append('projectType', form.projectType.value);
+      formData.append('description', form.description.value);
+
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: formData.toString()
+      })
+      .then(() => {
+        form.reset();
+        btn.innerText = "Request Sent!";
+        btn.classList.replace('bg-brand-red', 'bg-green-600');
+        setTimeout(() => {
+          btn.disabled = false;
+          btn.innerText = originalText;
+          btn.classList.replace('bg-green-600', 'bg-brand-red');
+          btn.classList.remove('opacity-80');
+        }, 2000);
+      })
+      .catch(() => {
+        btn.disabled = false;
+        btn.innerText = originalText;
+        btn.classList.remove('opacity-80');
+        formStatus.textContent = "Something went wrong. Please try emailing directly.";
+        formStatus.classList.remove('hidden');
+        formStatus.classList.add('text-red-500');
+      });
+    });
+  </script>
+</body>
+</html>
