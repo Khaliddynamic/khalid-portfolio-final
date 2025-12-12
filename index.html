@@ -229,6 +229,20 @@
     .shake {
       animation: shake 0.25s ease-in-out;
     }
+
+    /* Portfolio cards */
+    .portfolio-card {
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .portfolio-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.6);
+      border-color: rgba(220,38,38,0.4);
+    }
+    .portfolio-video {
+      display: block;
+    }
   </style>
 </head>
 <body class="antialiased selection:bg-brand-red selection:text-white relative">
@@ -267,10 +281,10 @@
       </div>
       <div class="md:hidden hidden" id="mobile-menu">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-          <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-white/5">Home</a>
+          <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg:white/5">Home</a>
           <a href="#services" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5">Services</a>
-          <a href="#portfolio" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5">Portfolio</a>
-          <a href="#whyme" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5">Why Me</a>
+          <a href="#portfolio" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text:white hover:bg:white/5">Portfolio</a>
+          <a href="#whyme" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text:white hover:bg:white/5">Why Me</a>
           <button onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" class="block w-full py-3 text-base font-bold bg-brand-red text-white rounded-md mt-4">Let's Talk</button>
         </div>
       </div>
@@ -310,7 +324,6 @@
             </a>
           </div>
 
-          <!-- Social proof -->
           <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-2 text-xs text-gray-500">
             <span class="px-3 py-1 rounded-full bg-white/5 border border-white/5">
               200+ videos edited for personal brands and businesses
@@ -379,7 +392,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16 reveal">
           <h2 class="text-3xl font-bold text-white mb-4">Portfolio</h2>
-          <p class="text-gray-400">Click any card to watch the video.</p>
+          <p class="text-gray-400">Hover to preview. Sound stays muted for clean browsing.</p>
         </div>
 
         <!-- SHORT FORM -->
@@ -393,151 +406,95 @@
           </div>
 
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            <!-- Card 1 -->
-            <div
-              class="group glass rounded-xl overflow-hidden portfolio-item reveal card-3d hover-glow shine flex flex-col"
-              data-title="Gym Motivation Reel"
-              data-video-url="https://www.youtube.com/watch?v=dVIFuB7axak"
-            >
+            <!-- Gym Reel -->
+            <div class="glass portfolio-card rounded-xl overflow-hidden reveal card-3d hover-glow shine flex flex-col">
               <div class="relative aspect-[9/16] w-full overflow-hidden">
-                <img
-                  src="https://img.youtube.com/vi/dVIFuB7axak/maxresdefault.jpg"
-                  alt="Gym Motivation"
-                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100"
-                />
-                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-all duration-300"></div>
-                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div class="px-3 py-1 rounded-full bg-black/70 text-xs text-white tracking-wide">
-                    Watch reel
-                  </div>
-                </div>
+                <video
+                  class="portfolio-video w-full h-full object-cover"
+                  src="videos/gym-reel.mp4"
+                  muted
+                  loop
+                  playsinline
+                ></video>
               </div>
               <div class="p-4 flex-1 flex flex-col justify-between">
-                <div class="flex items-center justify-between mb-3">
-                  <h4 class="text-white font-semibold text-sm">Gym Motivation</h4>
+                <div class="flex items-center justify-between mb-1">
+                  <h4 class="text-white font-semibold text-sm">Gym Motivation Reel</h4>
                   <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 text-[11px] text-gray-300">
                     <span class="w-4 h-4 rounded bg-gradient-to-tr from-purple-500 via-pink-500 to-yellow-500"></span>
-                    IG Reel
+                    Instagram
                   </span>
                 </div>
-                <button
-                  type="button"
-                  class="watch-btn mt-auto inline-flex items-center justify-center gap-2 text-xs font-medium px-3 py-2 rounded-lg bg-brand-red hover:bg-red-700 text-white transition-all duration-200 hover:shadow-lg hover:shadow-red-900/40"
-                >
-                  Watch
-                  <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
-                </button>
+                <p class="text-[11px] text-gray-400 mb-2">Short-form, hook-first, high-energy pacing.</p>
               </div>
             </div>
 
-            <!-- Card 2 -->
-            <div
-              class="group glass rounded-xl overflow-hidden portfolio-item reveal card-3d hover-glow shine flex flex-col delay-100"
-              data-title="E-Commerce Product Ad"
-              data-video-url="https://www.youtube.com/watch?v=dVIFuB7axak"
-            >
+            <!-- Product Ad -->
+            <div class="glass portfolio-card rounded-xl overflow-hidden reveal card-3d hover-glow shine flex flex-col delay-100">
               <div class="relative aspect-[9/16] w-full overflow-hidden">
-                <img
-                  src="https://img.youtube.com/vi/dVIFuB7axak/maxresdefault.jpg"
-                  alt="Product Ad"
-                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100"
-                />
-                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-all duration-300"></div>
-                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div class="px-3 py-1 rounded-full bg-black/70 text-xs text-white tracking-wide">
-                    Watch reel
-                  </div>
-                </div>
+                <video
+                  class="portfolio-video w-full h-full object-cover"
+                  src="videos/product-ad.mp4"
+                  muted
+                  loop
+                  playsinline
+                ></video>
               </div>
               <div class="p-4 flex-1 flex flex-col justify-between">
-                <div class="flex items-center justify-between mb-3">
-                  <h4 class="text-white font-semibold text-sm">Product Ad</h4>
+                <div class="flex items-center justify-between mb-1">
+                  <h4 class="text-white font-semibold text-sm">E‑commerce Product Ad</h4>
                   <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 text-[11px] text-gray-300">
                     <span class="w-4 h-4 rounded bg-gradient-to-tr from-purple-500 via-pink-500 to-yellow-500"></span>
-                    IG Reel
+                    Instagram
                   </span>
                 </div>
-                <button
-                  type="button"
-                  class="watch-btn mt-auto inline-flex items-center justify-center gap-2 text-xs font-medium px-3 py-2 rounded-lg bg-brand-red hover:bg-red-700 text-white transition-all duration-200 hover:shadow-lg hover:shadow-red-900/40"
-                >
-                  Watch
-                  <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
-                </button>
+                <p class="text-[11px] text-gray-400 mb-2">Conversion‑focused edit for paid social.</p>
               </div>
             </div>
 
-            <!-- Card 3 -->
-            <div
-              class="group glass rounded-xl overflow-hidden portfolio-item reveal card-3d hover-glow shine flex flex-col delay-200"
-              data-title="Travel Vlog Teaser"
-              data-video-url="https://www.youtube.com/watch?v=dVIFuB7axak"
-            >
+            <!-- Travel teaser -->
+            <div class="glass portfolio-card rounded-xl overflow-hidden reveal card-3d hover-glow shine flex flex-col delay-200">
               <div class="relative aspect-[9/16] w-full overflow-hidden">
-                <img
-                  src="https://img.youtube.com/vi/dVIFuB7axak/maxresdefault.jpg"
-                  alt="Travel Teaser"
-                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100"
-                />
-                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-all duration-300"></div>
-                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div class="px-3 py-1 rounded-full bg-black/70 text-xs text-white tracking-wide">
-                    Watch reel
-                  </div>
-                </div>
+                <video
+                  class="portfolio-video w-full h-full object-cover"
+                  src="videos/travel-teaser.mp4"
+                  muted
+                  loop
+                  playsinline
+                ></video>
               </div>
               <div class="p-4 flex-1 flex flex-col justify-between">
-                <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center justify-between mb-1">
                   <h4 class="text-white font-semibold text-sm">Travel Teaser</h4>
-                  <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 text-[11px] text-gray-300">
+                  <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg:white/5 text-[11px] text-gray-300">
                     <span class="w-4 h-4 rounded bg-gradient-to-tr from-purple-500 via-pink-500 to-yellow-500"></span>
-                    IG Reel
+                    Instagram
                   </span>
                 </div>
-                <button
-                  type="button"
-                  class="watch-btn mt-auto inline-flex items-center justify-center gap-2 text-xs font-medium px-3 py-2 rounded-lg bg-brand-red hover:bg-red-700 text-white transition-all duration-200 hover:shadow-lg hover:shadow-red-900/40"
-                >
-                  Watch
-                  <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
-                </button>
+                <p class="text-[11px] text-gray-400 mb-2">Cinematic b‑roll and smooth transitions.</p>
               </div>
             </div>
 
-            <!-- Card 4 -->
-            <div
-              class="group glass rounded-xl overflow-hidden portfolio-item reveal card-3d hover-glow shine flex flex-col delay-300"
-              data-title="Podcast Clip"
-              data-video-url="https://www.youtube.com/watch?v=dVIFuB7axak"
-            >
+            <!-- Podcast clip -->
+            <div class="glass portfolio-card rounded-xl overflow-hidden reveal card-3d hover-glow shine flex flex-col delay-300">
               <div class="relative aspect-[9/16] w-full overflow-hidden">
-                <img
-                  src="https://img.youtube.com/vi/dVIFuB7axak/maxresdefault.jpg"
-                  alt="Podcast Clip"
-                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100"
-                />
-                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-all duration-300"></div>
-                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div class="px-3 py-1 rounded-full bg-black/70 text-xs text-white tracking-wide">
-                    Watch reel
-                  </div>
-                </div>
+                <video
+                  class="portfolio-video w-full h-full object-cover"
+                  src="videos/podcast-clip.mp4"
+                  muted
+                  loop
+                  playsinline
+                ></video>
               </div>
               <div class="p-4 flex-1 flex flex-col justify-between">
-                <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center justify-between mb-1">
                   <h4 class="text-white font-semibold text-sm">Podcast Clip</h4>
-                  <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 text-[11px] text-gray-300">
+                  <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg:white/5 text-[11px] text-gray-300">
                     <span class="w-4 h-4 rounded bg-gradient-to-tr from-purple-500 via-pink-500 to-yellow-500"></span>
-                    IG Reel
+                    Instagram / TikTok
                   </span>
                 </div>
-                <button
-                  type="button"
-                  class="watch-btn mt-auto inline-flex items-center justify-center gap-2 text-xs font-medium px-3 py-2 rounded-lg bg-brand-red hover:bg-red-700 text-white transition-all duration-200 hover:shadow-lg hover:shadow-red-900/40"
-                >
-                  Watch
-                  <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
-                </button>
+                <p class="text-[11px] text-gray-400 mb-2">Punchy captions and zooms for retention.</p>
               </div>
             </div>
           </div>
@@ -554,23 +511,15 @@
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Long form card 1 -->
-            <div
-              class="group glass rounded-xl overflow-hidden portfolio-item reveal card-3d hover-glow shine flex flex-col"
-              data-title="Founder Documentary"
-              data-video-url="https://www.youtube.com/watch?v=dVIFuB7axak"
-            >
+            <div class="glass portfolio-card rounded-xl overflow-hidden reveal card-3d hover-glow shine flex flex-col">
               <div class="relative aspect-video w-full overflow-hidden">
-                <img
-                  src="https://img.youtube.com/vi/dVIFuB7axak/maxresdefault.jpg"
-                  alt="Founder Documentary"
-                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100"
-                />
-                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-all duration-300"></div>
-                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div class="px-3 py-1 rounded-full bg-black/70 text-xs text-white tracking-wide">
-                    Watch video
-                  </div>
-                </div>
+                <video
+                  class="portfolio-video w-full h-full object-cover"
+                  src="videos/founder-doc.mp4"
+                  muted
+                  loop
+                  playsinline
+                ></video>
               </div>
               <div class="p-4 flex-1 flex flex-col justify-between">
                 <div class="flex items-center justify-between mb-3">
@@ -580,50 +529,30 @@
                     YouTube
                   </span>
                 </div>
-                <button
-                  type="button"
-                  class="watch-btn mt-auto inline-flex items-center justify-center gap-2 text-xs font-medium px-3 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition-all duration-200 hover:shadow-lg hover:shadow-blue-900/40"
-                >
-                  Watch
-                  <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
-                </button>
+                <p class="text-[11px] text-gray-400 mb-2">Narrative‑driven story with b‑roll & sound design.</p>
               </div>
             </div>
 
             <!-- Long form card 2 -->
-            <div
-              class="group glass rounded-xl overflow-hidden portfolio-item reveal card-3d hover-glow shine flex flex-col delay-100"
-              data-title="Tech Review & Unboxing"
-              data-video-url="https://www.youtube.com/watch?v=dVIFuB7axak"
-            >
+            <div class="glass portfolio-card rounded-xl overflow-hidden reveal card-3d hover-glow shine flex flex-col delay-100">
               <div class="relative aspect-video w-full overflow-hidden">
-                <img
-                  src="https://img.youtube.com/vi/dVIFuB7axak/maxresdefault.jpg"
-                  alt="Tech Review"
-                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100"
-                />
-                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-all duration-300"></div>
-                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div class="px-3 py-1 rounded-full bg-black/70 text-xs text-white tracking-wide">
-                    Watch video
-                  </div>
-                </div>
+                <video
+                  class="portfolio-video w-full h-full object-cover"
+                  src="videos/tech-review.mp4"
+                  muted
+                  loop
+                  playsinline
+                ></video>
               </div>
               <div class="p-4 flex-1 flex flex-col justify-between">
                 <div class="flex items-center justify-between mb-3">
-                  <h4 class="text-white font-semibold text-sm">Tech Review</h4>
+                  <h4 class="text-white font-semibold text-sm">Tech Review & Unboxing</h4>
                   <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 text-[11px] text-gray-300">
                     <span class="w-4 h-4 bg-red-600 rounded"></span>
                     YouTube
                   </span>
                 </div>
-                <button
-                  type="button"
-                  class="watch-btn mt-auto inline-flex items-center justify-center gap-2 text-xs font-medium px-3 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition-all duration-200 hover:shadow-lg hover:shadow-blue-900/40"
-                >
-                  Watch
-                  <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
-                </button>
+                <p class="text-[11px] text-gray-400 mb-2">Clean pacing, overlays and product focus.</p>
               </div>
             </div>
           </div>
@@ -799,35 +728,6 @@
         </div>
       </div>
     </footer>
-
-    <!-- MODAL -->
-    <div id="videoModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center">
-      <div class="absolute inset-0 bg-black/90 modal-backdrop backdrop-blur" id="modalBackdrop"></div>
-      <div class="relative w-full max-w-4xl mx-4 md:mx-0 modal-content scale-95 opacity-0">
-        <div class="glass-strong border border-white/10 rounded-xl overflow-hidden shadow-2xl">
-          <div class="flex justify-between items-center p-4 border-b border-white/10">
-            <h3 id="modalTitle" class="text-white font-medium text-lg">Project Title</h3>
-            <button id="closeModalBtn" class="text-gray-400 hover:text-white transition-colors p-1 hover:scale-125 transform">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-              </svg>
-            </button>
-          </div>
-          <div class="relative bg-black">
-            <iframe
-              id="videoPlayer"
-              width="100%"
-              height="500"
-              src=""
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
-              style="aspect-ratio: 16/9;"
-            ></iframe>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 
   <!-- SCRIPTS -->
@@ -857,73 +757,9 @@
     // Sticky navbar shrink
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 40) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
+      if (window.scrollY > 40) navbar.classList.add('scrolled');
+      else navbar.classList.remove('scrolled');
     });
-
-    // Modal logic (supports YouTube, Drive, etc.)
-    const modal = document.getElementById('videoModal');
-    const modalContent = modal.querySelector('.modal-content');
-    const modalBackdrop = document.getElementById('modalBackdrop');
-    const closeModalBtn = document.getElementById('closeModalBtn');
-    const modalTitle = document.getElementById('modalTitle');
-    const videoPlayer = document.getElementById('videoPlayer');
-    const portfolioItems = document.querySelectorAll('.portfolio-item');
-
-    function buildEmbedUrl(url) {
-      if (!url) return '';
-      if (url.includes('youtube.com/watch')) {
-        return url.replace('watch?v=', 'embed/') + '?autoplay=1';
-      }
-      if (url.includes('youtu.be/')) {
-        const id = url.split('youtu.be/')[1].split(/[?&]/)[0];
-        return `https://www.youtube.com/embed/${id}?autoplay=1`;
-      }
-      return url;
-    }
-
-    function openModal(title, url) {
-      modalTitle.textContent = title;
-      videoPlayer.src = buildEmbedUrl(url);
-      modal.classList.remove('hidden');
-      setTimeout(() => {
-        modalContent.classList.remove('scale-95', 'opacity-0');
-        modalContent.classList.add('scale-100', 'opacity-100');
-      }, 10);
-    }
-
-    function closeModal() {
-      modalContent.classList.remove('scale-100', 'opacity-100');
-      modalContent.classList.add('scale-95', 'opacity-0');
-      setTimeout(() => {
-        modal.classList.add('hidden');
-        videoPlayer.src = '';
-      }, 300);
-    }
-
-    portfolioItems.forEach(item => {
-      const watchBtn = item.querySelector('.watch-btn');
-      if (watchBtn) {
-        watchBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const title = item.dataset.title;
-          const url = item.dataset.videoUrl;
-          openModal(title, url);
-        });
-      } else {
-        item.addEventListener('click', () => {
-          const title = item.dataset.title;
-          const url = item.dataset.videoUrl;
-          openModal(title, url);
-        });
-      }
-    });
-
-    closeModalBtn.addEventListener('click', closeModal);
-    modalBackdrop.addEventListener('click', closeModal);
 
     // Project type buttons
     const typeBtns = document.querySelectorAll('.project-type-btn');
@@ -940,7 +776,7 @@
       });
     });
 
-    // Contact form with validation + micro shake + loading
+    // Contact form (same as before – just kept)
     const form = document.getElementById('contactForm');
     const formStatus = document.getElementById('formStatus');
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyn6Xu0trUNONIumwQPxIAxg50E-z41gfW8BYiYDFwo75tRW-jUAQbJcoMp14yKsK_O/exec';
@@ -948,7 +784,6 @@
     form.addEventListener('submit', e => {
       e.preventDefault();
 
-      // basic required validation
       let hasError = false;
       ['fullName','email','phone','description'].forEach(name => {
         const field = form[name];
@@ -1002,6 +837,24 @@
         formStatus.textContent = "Something went wrong. Please try emailing directly.";
         formStatus.classList.remove('hidden');
         formStatus.classList.add('text-red-500');
+      });
+    });
+
+    // Hover autoplay for portfolio videos
+    document.addEventListener('DOMContentLoaded', () => {
+      const hoverVideos = document.querySelectorAll('.portfolio-video');
+
+      hoverVideos.forEach(video => {
+        video.muted = true;
+
+        video.addEventListener('mouseenter', () => {
+          video.play().catch(() => {});
+        });
+
+        video.addEventListener('mouseleave', () => {
+          video.pause();
+          video.currentTime = 0;
+        });
       });
     });
   </script>
