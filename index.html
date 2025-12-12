@@ -231,6 +231,11 @@
     .portfolio-video {
       display: block;
     }
+    .portfolio-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
   </style>
 </head>
 <body class="antialiased selection:bg-brand-red selection:text-white relative">
@@ -376,7 +381,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16 reveal">
           <h2 class="text-3xl font-bold text-white mb-4">Portfolio</h2>
-          <p class="text-gray-400">Hover to preview. Sound stays muted for clean browsing.</p>
+          <p class="text-gray-400">Hover to preview. Click to play with sound.</p>
         </div>
 
         <div class="mb-20">
@@ -389,25 +394,25 @@
           </div>
 
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            <!-- YouTube Short Embed -->
             <div class="glass portfolio-card rounded-xl overflow-hidden reveal card-3d shine flex flex-col">
               <div class="relative aspect-[9/16] w-full overflow-hidden">
-                <video
-                  class="portfolio-video w-full h-full object-cover"
-                  src="videos/gym-reel.mp4"
-                  muted
-                  loop
-                  playsinline
-                ></video>
+                <iframe
+                  class="portfolio-iframe"
+                  src="https://www.youtube.com/embed/l6I8vBm35qw"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                ></iframe>
               </div>
               <div class="p-4 flex-1 flex flex-col justify-between">
                 <div class="flex items-center justify-between mb-1">
-                  <h4 class="text-white font-semibold text-sm">Gym Motivation Reel</h4>
+                  <h4 class="text-white font-semibold text-sm">Animation Reel</h4>
                   <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 text-[11px] text-gray-300">
-                    <span class="w-4 h-4 rounded bg-gradient-to-tr from-purple-500 via-pink-500 to-yellow-500"></span>
-                    Instagram
+                    <span class="w-4 h-4 bg-red-600 rounded"></span>
+                    YouTube
                   </span>
                 </div>
-                <p class="text-[11px] text-gray-400">Short-form, hook-first, high-energy pacing.</p>
+                <p class="text-[11px] text-gray-400">Motion graphics showcase.</p>
               </div>
             </div>
 
@@ -803,6 +808,7 @@
       });
     });
 
+    // Hover autoplay for portfolio videos only (not iframe)
     document.addEventListener('DOMContentLoaded', () => {
       const hoverVideos = document.querySelectorAll('.portfolio-video');
 
