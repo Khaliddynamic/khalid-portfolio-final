@@ -212,3 +212,50 @@
     </div>
   </div>
 </section>
+
+<!-- Add this near the bottom of your HTML, before </body> -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const videos = document.querySelectorAll('.portfolio-video');
+    const buttons = document.querySelectorAll('.sound-toggle');
+
+    // Ensure videos try to autoplay muted
+    videos.forEach(video => {
+      video.muted = true;
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Some browsers block autoplay until user interaction
+        });
+      }
+    });
+
+    // Toggle mute/unmute on button click
+    buttons.forEach((btn, index) => {
+      const video = videos[index];
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (!video) return;
+
+        video.muted = !video.muted;
+        btn.textContent = video.muted ? '🔇' : '🔊';
+
+        if (video.paused) {
+          video.play().catch(() => {});
+        }
+      });
+    });
+
+    // Also allow click on video to toggle sound
+    videos.forEach(video => {
+      video.addEventListener('click', () => {
+        video.muted = !video.muted;
+        const btn = video.closest('.portfolio-card')?.querySelector('.sound-toggle');
+        if (btn) btn.textContent = video.muted ? '🔇' : '🔊';
+        if (video.paused) {
+          video.play().catch(() => {});
+        }
+      });
+    });
+  });
+</script>
