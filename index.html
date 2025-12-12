@@ -228,10 +228,23 @@
       box-shadow: 0 18px 40px rgba(0,0,0,0.6);
       border-color: rgba(220,38,38,0.4);
     }
-    .portfolio-iframe {
+
+    .youtube-link {
+      position: relative;
+      display: block;
       width: 100%;
       height: 100%;
-      border: none;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    }
+    .youtube-link:hover .play-overlay {
+      transform: scale(1.1);
+    }
+    .play-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: transform 0.3s ease;
     }
   </style>
 </head>
@@ -378,7 +391,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16 reveal">
           <h2 class="text-3xl font-bold text-white mb-4">Portfolio</h2>
-          <p class="text-gray-400">Click to watch my work on YouTube.</p>
+          <p class="text-gray-400">Click to watch on YouTube.</p>
         </div>
 
         <div class="mb-20">
@@ -391,22 +404,21 @@
           </div>
 
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            <!-- YOUR YOUTUBE VIDEO HERE -->
+            <!-- YOUR YOUTUBE SHORT - CLICK TO OPEN -->
             <div class="glass portfolio-card rounded-xl overflow-hidden reveal active card-3d shine flex flex-col">
-              <div class="relative aspect-[9/16] w-full overflow-hidden">
-                <iframe
-                  class="portfolio-iframe"
-                  src="https://www.youtube.com/embed/l6I8vBm35qw"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen
-                ></iframe>
-              </div>
+              <a href="https://youtube.com/shorts/l6I8vBm35qw" target="_blank" class="youtube-link aspect-[9/16] flex items-center justify-center">
+                <div class="play-overlay">
+                  <svg class="w-20 h-20 text-white drop-shadow-2xl" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </div>
+              </a>
               <div class="p-4 flex-1 flex flex-col justify-between">
                 <div class="flex items-center justify-between mb-1">
                   <h4 class="text-white font-semibold text-sm">Gym Motivation Reel</h4>
                   <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 text-[11px] text-gray-300">
-                    <span class="w-4 h-4 rounded bg-gradient-to-tr from-purple-500 via-pink-500 to-yellow-500"></span>
-                    Instagram
+                    <span class="w-4 h-4 bg-red-600 rounded"></span>
+                    YouTube
                   </span>
                 </div>
                 <p class="text-[11px] text-gray-400">Short-form, hook-first, high-energy pacing.</p>
